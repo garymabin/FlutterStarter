@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
 
 import 'package:starter/book_resp/book_resp.dart';
 import 'package:starter/contracts/book_store_contract.dart';
@@ -20,18 +19,16 @@ class DoubanService extends BookStoreContract with JSONParser<BookResp,
     this.webService = webService ?? new RestApiHttpImpl(), this.config = new
       DoubanConfig();
 
-  DoubanService(this.config, this.webService);
+  DoubanService.withConfigAndWebService(this.config, this.webService);
+
+  DoubanService(): this.withWebService(null);
 
   @override
   Future<BookResp> getBooks(int start, int count, String tag) async {
     String query = _buildQuery(new Map<String, String>.fromIterables(["start",
     "count", "tag"], [start.toString(), count.toString(), tag]));
 
-    Map<String, String> httpHeaders = new HashMap<String, String>();
-    httpHeaders.putIfAbsent("Content-Type", () => "application/json; "
-        "charset=utf-8");
-    final resp = await webService.get("${config.url}/v2/book/search$query",
-        headers: httpHeaders);
+    final resp = await webService.get("${config.url}/v2/book/search$query");
     return decode(resp, (resp) => resp.body, (jsonMap) => BookResp.fromJson
       (jsonMap));
   }

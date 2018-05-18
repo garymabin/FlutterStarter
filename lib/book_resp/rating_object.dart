@@ -8,7 +8,7 @@ part 'rating_object.g.dart';
 class RatingObject extends Object with _$RatingObjectSerializerMixin {
   int max;
   int numRaters;
-  int average;
+  String average;
   int min;
 
   RatingObject();

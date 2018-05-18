@@ -10,13 +10,13 @@ RatingObject _$RatingObjectFromJson(Map<String, dynamic> json) =>
     new RatingObject()
       ..max = json['max'] as int
       ..numRaters = json['numRaters'] as int
-      ..average = json['average'] as int
+      ..average = json['average'] as String
       ..min = json['min'] as int;
 
 abstract class _$RatingObjectSerializerMixin {
   int get max;
   int get numRaters;
-  int get average;
+  String get average;
   int get min;
   Map<String, dynamic> toJson() {
     var val = <String, dynamic>{};

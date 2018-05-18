@@ -3,9 +3,9 @@ import 'dart:collection';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
+import 'package:starter/api/douban_service.dart';
 import 'package:starter/config/douban_config.dart';
 import 'package:starter/contracts/rest_api_contract.dart';
-import 'package:starter/douban_service.dart';
 import 'package:test/test.dart';
 
 // Mock class
@@ -35,19 +35,19 @@ void main() {
         () => "application/json; "
             "charset=utf-8");
 
-    var doubanService = new DoubanService(doubanConfig, mockRestApiContract);
+    var doubanService = new DoubanService.withConfigAndWebService(
+        doubanConfig, mockRestApiContract);
 
     when(doubanConfig.url).thenReturn(expectedUrl);
 
-    when(mockRestApiContract.get(typed(any),
-            headers: typed(any, named: 'headers')))
+    when(mockRestApiContract.get(typed(any)))
         .thenAnswer((_) => new Future.value(testResponse));
 
-    doubanService.getBooks(expectedStart, expectedCount,
-        expectedTag);
+    doubanService.getBooks(expectedStart, expectedCount, expectedTag);
 
-    await untilCalled(mockRestApiContract.get(typed(any), headers: typed(any, named: 'headers')));
+    await untilCalled(mockRestApiContract.get(typed(any)));
 
-    verify(mockRestApiContract.get("expectedUrl/v2/book/search?start=0&count=20&tag=TAG&", headers: httpHeaders));
+    verify(mockRestApiContract
+        .get("expectedUrl/v2/book/search?start=0&count=20&tag=TAG&"));
   });
 }
