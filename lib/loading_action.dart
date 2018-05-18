@@ -4,6 +4,9 @@ class LoadingAction {
 
   final int loadingAction;
   final int startingIndex;
+  dynamic extraData;
 
-  LoadingAction(this.startingIndex, this.loadingAction);
+  LoadingAction(this.startingIndex, this.loadingAction, {data}): extraData
+  = data;
+
 }

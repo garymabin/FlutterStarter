@@ -1,10 +1,10 @@
 import 'package:starter/book_item.dart';
 
 class BookDTO {
-  List<BookItem> books;
-  int count;
-  int start;
-  int total;
+  final List<BookItem> books;
+  final int count;
+  final int start;
+  final int total;
 
   BookDTO(this.books, this.count, this.start, this.total);
 }
