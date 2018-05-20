@@ -29,12 +29,6 @@ void main() {
 
     var doubanConfig = new MockDoubanConfig();
 
-    Map<String, String> httpHeaders = new HashMap<String, String>();
-    httpHeaders.putIfAbsent(
-        "Content-Type",
-        () => "application/json; "
-            "charset=utf-8");
-
     var doubanService = new DoubanService.withConfigAndWebService(
         doubanConfig, mockRestApiContract);
 
@@ -43,9 +37,7 @@ void main() {
     when(mockRestApiContract.get(typed(any)))
         .thenAnswer((_) => new Future.value(testResponse));
 
-    doubanService.getBooks(expectedStart, expectedCount, expectedTag);
-
-    await untilCalled(mockRestApiContract.get(typed(any)));
+    await doubanService.getBooks(expectedStart, expectedCount, expectedTag);
 
     verify(mockRestApiContract
         .get("expectedUrl/v2/book/search?start=0&count=20&tag=TAG&"));

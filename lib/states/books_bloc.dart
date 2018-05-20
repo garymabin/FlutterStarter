@@ -26,7 +26,7 @@ class BooksBloc {
       BookRepository repository) {
     return (LoadingAction loadingAction) {
       Function loadingFinished =
-          () => (loadingAction.extraData as Completer<Null>)?.complete;
+          () => (loadingAction.extraData as Completer<Null>).complete();
       return new Observable<BookDTO>.fromFuture(
               repository.getBooks(loadingAction.startingIndex))
           .map<BookListState>((BookDTO resp) {

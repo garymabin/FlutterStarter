@@ -43,6 +43,11 @@ class _RxDartBooksAppState extends State<MyApp> {
   void initState() {
     super.initState();
     bloc = new BooksBloc(widget.repository);
+    _initialLoading();
+  }
+
+  _initialLoading() async {
+    _refreshIndicatorKey.currentState.show();
   }
 
   @override
