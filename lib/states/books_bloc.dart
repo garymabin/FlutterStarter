@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:rxdart/rxdart.dart';
-import 'package:starter/book_dto.dart';
+import 'package:starter/models/book_dto.dart';
 import 'package:starter/book_repository.dart';
 import 'package:starter/loading_action.dart';
 import 'package:starter/states/book_list_state.dart';

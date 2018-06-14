@@ -9,7 +9,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:starter/book_dto.dart';
+import 'package:starter/models/book_dto.dart';
 import 'package:starter/book_repository.dart';
 
 import 'package:starter/main.dart';

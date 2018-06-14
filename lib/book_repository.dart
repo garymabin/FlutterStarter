@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:starter/api/douban_service.dart';
-import 'package:starter/book_dto.dart';
-import 'package:starter/book_item.dart';
+import 'package:starter/models/book_dto.dart';
+import 'package:starter/models/book_item.dart';
 import 'package:starter/contracts/book_resp/book_resp.dart';
 import 'package:starter/contracts/book_store_contract.dart';
 

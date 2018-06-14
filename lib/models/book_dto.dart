@@ -1,4 +1,4 @@
-import 'package:starter/book_item.dart';
+import 'package:starter/models/book_item.dart';
 
 class BookDTO {
   final List<BookItem> books;

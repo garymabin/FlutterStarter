@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:starter/book_dto.dart';
+import 'package:starter/models/book_dto.dart';
 
 class BookListWidget extends StatelessWidget {
   final BookDTO bookResp;

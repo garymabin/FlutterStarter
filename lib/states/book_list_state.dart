@@ -1,4 +1,4 @@
-import 'package:starter/book_dto.dart';
+import 'package:starter/models/book_dto.dart';
 
 
 class BookListState {
