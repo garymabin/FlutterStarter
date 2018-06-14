@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:starter/book_resp/image_object.dart';
-import 'package:starter/book_resp/rating_object.dart';
-import 'package:starter/book_resp/tag_object.dart';
+import 'package:starter/contracts/book_resp/image_object.dart';
+import 'package:starter/contracts/book_resp/rating_object.dart';
+import 'package:starter/contracts/book_resp/tag_object.dart';
 
 part 'book_object.g.dart';
 

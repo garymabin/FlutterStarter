@@ -1,4 +1,4 @@
-import 'package:starter/book_resp/book_object.dart';
+import 'package:starter/contracts/book_resp/book_object.dart';
 
 class BookItem {
   final String title;

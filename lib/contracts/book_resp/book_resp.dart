@@ -1,4 +1,4 @@
-import 'package:starter/book_resp/book_object.dart';
+import 'package:starter/contracts/book_resp/book_object.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'book_resp.g.dart';

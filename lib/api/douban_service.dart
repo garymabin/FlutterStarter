@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:starter/book_resp/book_resp.dart';
+import 'package:starter/contracts/book_resp/book_resp.dart';
 import 'package:starter/contracts/book_store_contract.dart';
 
 import 'package:http/http.dart' as http;
