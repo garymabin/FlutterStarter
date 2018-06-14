@@ -4,9 +4,10 @@ class LoadingAction {
 
   final int loadingAction;
   final int startingIndex;
-  dynamic extraData;
+  Function onFinished;
 
-  LoadingAction(this.startingIndex, this.loadingAction, {data}): extraData
-  = data;
+  LoadingAction(this.startingIndex, this.loadingAction, {onFinished}):
+        this.onFinished
+  = onFinished;
 
 }

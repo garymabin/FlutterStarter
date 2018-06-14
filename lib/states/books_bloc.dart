@@ -25,22 +25,20 @@ class BooksBloc {
   static Stream<BookListState> Function(LoadingAction) _buildBooksStateStream(
       BookRepository repository) {
     return (LoadingAction loadingAction) {
-      Function loadingFinished =
-          () => (loadingAction.extraData as Completer<Null>).complete();
       return new Observable<BookDTO>.fromFuture(
               repository.getBooks(loadingAction.startingIndex))
           .map<BookListState>((BookDTO resp) {
-            loadingFinished();
+            loadingAction.onFinished();
             return new BookListState(
                 books: resp, hasError: false, isLoading: false);
           })
-          .doOnError(loadingFinished)
+          .doOnError(loadingAction.onFinished)
           .onErrorReturn(new BookListState.error())
           .startWith(new BookListState.loading());
     };
   }
 
-  void dipose() {
+  void dispose() {
     pullToRefresh.close();
   }
 }

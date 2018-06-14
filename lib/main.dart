@@ -20,7 +20,7 @@ class _RxDartBooksAppState extends State<MyApp> {
     final Completer<Null> completer = new Completer<Null>();
     bloc.pullToRefresh
         .add(new LoadingAction(0, LoadingAction.LOADING_ACTION_REFRESH,
-        data: completer));
+        onFinished: completer.complete));
     return completer.future;
   }
 
@@ -59,7 +59,7 @@ class _RxDartBooksAppState extends State<MyApp> {
   @override
   void dispose() {
     super.dispose();
-    bloc.dipose();
+    bloc.dispose();
   }
 }
 
