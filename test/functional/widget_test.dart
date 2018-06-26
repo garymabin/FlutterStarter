@@ -6,9 +6,9 @@ import 'dart:async';
 // find child widgets in the widget tree, read text, and verify that the values of widget properties
 // are correct.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:starter/books_home_page.dart';
 import 'package:starter/models/book_dto.dart';
 import 'package:starter/book_repository.dart';
 
@@ -27,7 +27,7 @@ void main() {
     when(mockedBookRepository.getBooks(typed(argThat(anything)))).thenAnswer((
         _) => completer.future);
 
-    await tester.pumpWidget(new MyApp(key: null, repository:
+    await tester.pumpWidget(new BooksHomePage(key: null, repository:
     mockedBookRepository));
 
     verify(mockedBookRepository.getBooks(0));
