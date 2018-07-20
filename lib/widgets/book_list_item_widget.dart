@@ -7,14 +7,14 @@ import 'package:starter/models/book_item.dart';
 
 class BookListItemWidget extends StatelessWidget {
   final BookItem item;
+  final GestureTapCallback onTap;
 
-  BookListItemWidget(this.item);
+  BookListItemWidget(this.item, {@required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return new GestureDetector(
-        onTap: () => Navigator.push(context, new AnimatedRoute(
-            builder: (_) => new BookDetailPage(this.item))),
+        onTap: onTap,
         child: new Container(
             padding: const EdgeInsets.all(10.0),
             child: new Row(children: [

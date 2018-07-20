@@ -5,8 +5,9 @@ import 'package:starter/widgets/book_list_item_widget.dart';
 
 class BookListWidget extends StatelessWidget {
   final BookDTO bookResp;
+  final Function(int) onTap;
 
-  BookListWidget(this.bookResp);
+  BookListWidget(this.bookResp, {@required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class BookListWidget extends StatelessWidget {
             itemCount: bookResp?.books?.length ?? 0,
             itemBuilder: (context, index) {
               final item = bookResp.books[index];
-              return new BookListItemWidget(item);
+              return new BookListItemWidget(item, onTap: () => onTap(index));
             }));
   }
 }

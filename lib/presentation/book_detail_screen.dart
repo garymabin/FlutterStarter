@@ -1,0 +1,72 @@
+
+import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+import 'package:starter/helper/ui_helper.dart';
+import 'package:starter/models/book_item.dart';
+import 'package:starter/selectors/selectors.dart';
+import 'package:starter/states/app_state.dart';
+
+class BookDetailScreen extends StatelessWidget {
+
+  final int index;
+
+  BookDetailScreen(this.index);
+
+  @override
+  Widget build(BuildContext context) {
+    return new StoreConnector<AppState, _ViewModel>(
+        converter: (Store<AppState> store) {
+      return _ViewModel.fromStore(store, this.index);
+    }, builder: (BuildContext context, _ViewModel viewModel) {
+    final BookItem item = viewModel.item;
+    return new Scaffold(
+        appBar: new AppBar(
+          title: new Text('Welcome to Flutter'),
+        ),
+        body: new Container(
+            color: Colors.white,
+            padding: const EdgeInsets.all(10.0),
+            child: new Column(children: [
+              new Container(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: new Image.network(item.image,
+                      width: 74.0, height: 108.0)),
+              new Expanded(
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      new Container(
+                          padding: const EdgeInsets.only(bottom: 4.0),
+                          child: new Text(item.title,
+                              style: new TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16.0))),
+                      new Text(item.information,
+                          style: new TextStyle(fontSize: 13.0)),
+                      new Container(
+                          padding: const EdgeInsets.only(right: 4.0),
+                          child: new Row(children: <Widget>[
+                            buildRatingBar(Theme.of(context), item.rating),
+                            new Container(
+                                padding:
+                                const EdgeInsets.symmetric(horizontal: 5.0),
+                                child: new Text(item.rating.toString(),
+                                    style: new TextStyle(fontSize: 12.0)))
+                          ])),
+                      new Text(item.summary,
+                          style: new TextStyle(fontSize: 12.0), maxLines: 3),
+                    ],
+                  ))
+            ])));
+  });
+  }
+}
+class _ViewModel {
+  final BookItem item;
+
+  _ViewModel(this.item);
+
+  static _ViewModel fromStore(Store<AppState> store, index) {
+    return _ViewModel(bookItemSelector(store.state, index));
+  }
+}

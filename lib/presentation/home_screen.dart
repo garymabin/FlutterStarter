@@ -5,13 +5,12 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:starter/actions/actions.dart';
 import 'package:starter/book_repository.dart';
+import 'package:starter/containers/book_list_container.dart';
 import 'package:starter/models/book_dto.dart';
-import 'package:starter/selectors/selectors.dart';
 import 'package:starter/states/app_state.dart';
 import 'package:starter/states/book_list_state.dart';
-import 'package:starter/widgets/book_list_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class PullRefreshState extends State<StatefulWidget> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
 
@@ -27,7 +26,7 @@ class HomeScreen extends StatelessWidget {
           ),
           body: new RefreshIndicator(
               key: _refreshIndicatorKey,
-              child: new BookListWidget(viewModel.bookListState.books),
+              child: new BookListContainer(),
               onRefresh: () => _handleRefresh(viewModel: viewModel)));
     });
   }
@@ -37,30 +36,45 @@ class HomeScreen extends StatelessWidget {
     viewModel.onLoadBookList(20, completer: completer);
     return completer.future;
   }
+
+  @override
+  void initState() {
+    super.initState();
+    _initialLoading();
+  }
+
+  _initialLoading() async {
+    _refreshIndicatorKey.currentState.show();
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+
+  @override
+  State<StatefulWidget> createState() {
+    return PullRefreshState();
+  }
 }
 
 class _ViewModel {
-  final BookListState bookListState;
-  final Function(int, {@required Completer<Null>
-  completer}) onLoadBookList;
+  final Function(int, {@required Completer<Null> completer}) onLoadBookList;
 
-  _ViewModel({@required this.bookListState, @required this.onLoadBookList});
+  _ViewModel({@required this.onLoadBookList});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-        bookListState: bookListStateSelector(store.state),
         onLoadBookList: (start, {@required Completer<Null> completer}) {
-          BookRepository repository = BookRepository.peekBookRepository();
-          store.dispatch(StartLoadingBookListAction());
+      BookRepository repository = BookRepository.peekBookRepository();
+      store.dispatch(StartLoadingBookListAction());
 
-          repository.getBooks(start).then((BookDTO resp) {
-            completer.complete(null);
-            store.dispatch(FinishLoadingBookListAction(
-                BookListState(books: resp, hasError: false, isLoading: false)));
-          }).catchError((error) {
-            completer.complete(null);
-            store.dispatch(ErrorLoadingBookListAction());
-          });
-        });
+      repository.getBooks(start).then((BookDTO resp) {
+        completer.complete(null);
+        store.dispatch(FinishLoadingBookListAction(
+            BookListState(books: resp, hasError: false, isLoading: false)));
+      }).catchError((error) {
+        completer.complete(null);
+        store.dispatch(ErrorLoadingBookListAction());
+      });
+    });
   }
 }
