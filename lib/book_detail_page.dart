@@ -1,12 +1,7 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:starter/book_repository.dart';
 import 'package:starter/helper/ui_helper.dart';
-import 'package:starter/loading_action.dart';
 import 'package:starter/models/book_item.dart';
-import 'package:starter/states/books_bloc.dart';
-import 'package:starter/widgets/book_widget.dart';
 
 class BookDetailPage extends StatelessWidget {
 

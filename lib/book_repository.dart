@@ -8,11 +8,17 @@ import 'package:starter/contracts/book_store_contract.dart';
 
 class BookRepository {
   final BookStoreContract bookStoreContract;
+  static BookRepository _sInstance;
 
-  BookRepository.withBookStore(bookStoreContract)
+  BookRepository._withBookStore(bookStoreContract)
       : this.bookStoreContract = bookStoreContract ?? new DoubanService();
 
-  BookRepository() : this.withBookStore(null);
+  static peekBookRepository() {
+    if (_sInstance == null) {
+      _sInstance = BookRepository._withBookStore(null);
+    }
+    return _sInstance;
+  }
 
   Future<BookDTO> getBooks(int start) {
     Future<BookResp> books = bookStoreContract.getBooks(start, 20, 'IT');

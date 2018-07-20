@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:starter/book_detail_page.dart';
-import 'package:starter/book_repository.dart';
-import 'package:starter/books_home_page.dart';
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:starter/presentation/home_screen.dart';
+import 'package:starter/states/app_state.dart';
+import 'package:starter/reducers/app_state_reducer.dart';
 
-void main() => runApp(new MyApp());
+
+void main() => runApp(new ReduxApp());
 
 class AnimatedRoute<T> extends MaterialPageRoute<T> {
   AnimatedRoute({WidgetBuilder builder, RouteSettings settings})
@@ -19,20 +22,29 @@ class AnimatedRoute<T> extends MaterialPageRoute<T> {
   }
 }
 
-class MyApp extends StatelessWidget {
+class ReduxApp extends StatelessWidget {
+  final store = Store<AppState>(
+    appReducer,
+    initialState: AppState.initial()
+  );
+
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Welcome to Flutter',
-      onGenerateRoute: (RouteSettings settings) {
-        switch (settings.name) {
-          case '/':
-            return AnimatedRoute(
-                builder: (_) =>
-                    new BooksHomePage(repository: new BookRepository()),
-                settings: settings);
-        }
-      },
+    return StoreProvider(
+      store: store,
+      child: new MaterialApp(
+        title: 'Welcome to Flutter',
+        onGenerateRoute: (RouteSettings settings) {
+          switch (settings.name) {
+            case '/':
+              return AnimatedRoute(
+                  builder: (_) =>
+                  new HomeScreen(),
+                  settings: settings);
+          }
+        },
+      )
     );
   }
 }
+
